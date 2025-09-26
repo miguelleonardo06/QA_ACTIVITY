@@ -13,3 +13,4 @@ password_field = '//input[@name="password"]'
 confirm_password_field = '//input[@name="confirm_password"]'
 
 submit_btn = '//button[@aria-label="Save"]'
+refresh_btn = "//button[@aria-label='Refresh']"
