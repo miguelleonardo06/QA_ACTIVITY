@@ -166,9 +166,10 @@ Update Last Five Customer
         ${state}=    Set Variable    New York
         ${birthday}    Generate Birthday
 
-        Sleep    2s
+        
+        Wait Until Element Is Visible      xpath=(//table//tbody//tr)[${row}]    5s
 
-        Click Element                    xpath=(//table//tbody//tr)[${row}]//td//div[contains(@class,"MuiAvatar-colorDefault") and text()]
+        Click Element                    xpath=(//table//tbody//tr)[${row}]
 
         Wait Until Element Is Visible    ${first_name_field}
 
@@ -209,15 +210,18 @@ Print All User In Table
         FOR    ${row_index}    IN RANGE    1    ${row_count + 1}
         Log To Console    ===== User ${row_index} =====
 
-        ${name}=               Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[1]
-        ${last_seen}=          Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[2]
-        ${orders}=             Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[3]
-        ${total_spent}=        Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[4]
-        ${latest_purchase}=    Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[5]
-        ${news}=               Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[6]
-        ${segment}=            Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[7]
+        ${name}=         Get Text     xpath=(//table//tbody/tr)[${row_index}]/td[2]
+        ${clean_name}=   Evaluate     '''${name}'''.strip()
+        ${full_name}=    Evaluate     '''${clean_name}'''[1:]
 
-        Log To Console    Name: ${name}
+        ${last_seen}=          Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[3]
+        ${orders}=             Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[4]
+        ${total_spent}=        Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[5]
+        ${latest_purchase}=    Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[6]
+        ${news}=               Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[7]
+        ${segment}=            Get Text    xpath=(//table//tbody/tr)[${row_index}]/td[8]
+
+        Log To Console    Name: ${full_name}
         Log To Console    Last Seen: ${last_seen}
         Log To Console    Orders: ${orders}
         Log To Console    Total Spent: $${total_spent}
